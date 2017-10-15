@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.Model", "Messenger.Model", "{E0A40685-F05D-4962-958D-023B031F91B6}"
+	ProjectSection(SolutionItems) = preProject
+		Files.cs = Files.cs
+		Group.cs = Group.cs
+		Message.cs = Message.cs
+		User.cs = User.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLayer", "Messenger.DataLayer", "{58974A30-FF18-47C9-82B7-7E5DBD663BBF}"
+	ProjectSection(SolutionItems) = preProject
+		IGroupsRepository.cs = IGroupsRepository.cs
+		IUsersRepository.cs = IUsersRepository.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLayer.SQL", "Messenger.DataLayer.SQL", "{3DA8E857-968D-4830-9F71-940024BC2093}"
+	ProjectSection(SolutionItems) = preProject
+		UsersRepository.cs = UsersRepository.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
