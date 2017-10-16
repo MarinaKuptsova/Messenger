@@ -3,26 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.Model", "Messenger.Model", "{E0A40685-F05D-4962-958D-023B031F91B6}"
-	ProjectSection(SolutionItems) = preProject
-		Files.cs = Files.cs
-		Group.cs = Group.cs
-		Message.cs = Message.cs
-		User.cs = User.cs
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.DataLayer", "Messenger.DataLayer\Messenger.DataLayer.csproj", "{5367DF91-3A75-423B-8BA3-46390E0F5814}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLaye", "Messenger.DataLaye", "{58974A30-FF18-47C9-82B7-7E5DBD663BBF}"
-	ProjectSection(SolutionItems) = preProject
-		IGroupsRepository.cs = IGroupsRepository.cs
-		IUsersRepository.cs = IUsersRepository.cs
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.DataLayer.Sql", "Messenger.DataLayer.Sql\Messenger.DataLayer.Sql.csproj", "{7B5DCBFF-AB6C-4357-B95D-7C2C318C0287}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLayer.SQL", "Messenger.DataLayer.SQL", "{3DA8E857-968D-4830-9F71-940024BC2093}"
-	ProjectSection(SolutionItems) = preProject
-		UsersRepository.cs = UsersRepository.cs
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Model", "Messenger.Model\Messenger.Model.csproj", "{DEC56B96-BF0B-473E-ABC4-58573689BD17}"
 EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5367DF91-3A75-423B-8BA3-46390E0F5814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5367DF91-3A75-423B-8BA3-46390E0F5814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5367DF91-3A75-423B-8BA3-46390E0F5814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5367DF91-3A75-423B-8BA3-46390E0F5814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B5DCBFF-AB6C-4357-B95D-7C2C318C0287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B5DCBFF-AB6C-4357-B95D-7C2C318C0287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B5DCBFF-AB6C-4357-B95D-7C2C318C0287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B5DCBFF-AB6C-4357-B95D-7C2C318C0287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
