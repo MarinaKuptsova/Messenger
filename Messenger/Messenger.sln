@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.Model", "Messenge
 		User.cs = User.cs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLayer", "Messenger.DataLayer", "{58974A30-FF18-47C9-82B7-7E5DBD663BBF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messenger.DataLaye", "Messenger.DataLaye", "{58974A30-FF18-47C9-82B7-7E5DBD663BBF}"
 	ProjectSection(SolutionItems) = preProject
 		IGroupsRepository.cs = IGroupsRepository.cs
 		IUsersRepository.cs = IUsersRepository.cs
