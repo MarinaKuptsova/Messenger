@@ -1,9 +1,14 @@
 ﻿using System;
 
-public class Group
+namespace Messenger.Model
 {
-	public Guid Id { get; set; }
-    public string UserLogin { get; set; }
-    public DateTime CreateDate { get; set; }
-    public string GroupName { get; set; }
+    public class Group
+    {
+        public Guid Id { get; set; }
+        public string UserLogin { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string GroupName { get; set; }
+    }
 }
+
+

@@ -44,6 +44,12 @@
     <Compile Include="IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Messenger.Model\Messenger.Model.csproj">
+      <Project>{dec56b96-bf0b-473e-abc4-58573689bd17}</Project>
+      <Name>Messenger.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

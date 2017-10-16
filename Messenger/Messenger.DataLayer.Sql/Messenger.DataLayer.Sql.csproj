@@ -43,6 +43,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Messenger.DataLayer\Messenger.DataLayer.csproj">
+      <Project>{5367df91-3a75-423b-8ba3-46390e0f5814}</Project>
+      <Name>Messenger.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Messenger.Model\Messenger.Model.csproj">
+      <Project>{dec56b96-bf0b-473e-abc4-58573689bd17}</Project>
+      <Name>Messenger.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

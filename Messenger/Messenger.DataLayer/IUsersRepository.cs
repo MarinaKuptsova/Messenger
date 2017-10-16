@@ -1,9 +1,15 @@
-﻿using System;
+﻿using Messenger.Model;
+using System;
 
-public interface IUsersRepository
+namespace Messenger.DataLayer
 {
-    User Create(User user);
-    void Delete(Guid id);
-    User Get(Guid id);
-    void Update(Guid id);
+    public interface IUsersRepository
+    {
+        User Create(User user, Files file);
+        void Delete(string login);
+        User Get(string login);
+        void Update(User user);
+        //void UpdatePhoto(string login);
+    }
 }
+

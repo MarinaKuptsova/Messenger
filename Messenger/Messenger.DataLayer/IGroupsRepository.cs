@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using Messenger.Model;
 
-public interface IGroupsRepository
+namespace Messenger.DataLayer
 {
-    Chat Create(IEnumerable<Guid> members, string name);
-    IEnumerable<Chat> GetUserChats(Guid userId);
-    void DeleteChat(Guid chatId);
+    public interface IGroupsRepository
+    {
+        Group Create(IEnumerable<Guid> members, string name);
+        IEnumerable<Group> GetUserChats(Guid userId);
+        void DeleteChat(Guid groupId);
+        void AddMember(Guid memberId, Guid groupId);
+        void DeleteMember(Guid memberId, Guid groupId);
+    }
 }
+
