@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.DataLayer.Sql", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Model", "Messenger.Model\Messenger.Model.csproj", "{DEC56B96-BF0B-473E-ABC4-58573689BD17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.DataLayer.Sql.Tests", "Messenger.DataLayer.Sql.Tests\Messenger.DataLayer.Sql.Tests.csproj", "{4F869325-1786-4EE4-948D-5E84BEDAA3A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEC56B96-BF0B-473E-ABC4-58573689BD17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,5 @@
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Model\bin\Debug\Messenger.Model.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Model\bin\Debug\Messenger.Model.pdb
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Model\obj\Debug\Messenger.Model.csprojResolveAssemblyReference.cache
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Model\obj\Debug\Messenger.Model.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Model\obj\Debug\Messenger.Model.pdb
