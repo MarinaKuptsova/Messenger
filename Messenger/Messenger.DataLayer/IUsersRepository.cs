@@ -9,8 +9,8 @@ namespace Messenger.DataLayer
         void Delete(Guid id);
         User Get(Guid id);
         void Update(User user);
-        //void UpdatePhoto(Guid id);
-        //Files GetUsersFiles(Guid id) ид юзера
+        //void UpdatePhoto(Guid idUser);
+        //Files GetUsersFiles(Guid idUser) 
     }
 }
 

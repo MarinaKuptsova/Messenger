@@ -6,7 +6,7 @@ namespace Messenger.DataLayer
 {
     public interface IGroupsRepository
     {
-        Group Create(IEnumerable<Guid> members, string name);
+        void Create(IEnumerable<Guid> members, string name);
         IEnumerable<Group> GetUserChats(Guid userId);
         void DeleteChat(Guid groupId);
         void AddMember(Guid memberId, Guid groupId);
