@@ -16,14 +16,14 @@ namespace Messenger.DataLayer.Sql.Tests
             //arrange
             var user = new User
             {
-                FirstName = "Marina",
+                FirstName = "test1",
                 IsActive = 1,
                 Password = "password",
-                LastName = "kupchik"
+                LastName = "test2"
             };
             var file = new Files
             {
-                Name = "Marina",
+                Name = "testname",
                 Size = 10
             };
             
