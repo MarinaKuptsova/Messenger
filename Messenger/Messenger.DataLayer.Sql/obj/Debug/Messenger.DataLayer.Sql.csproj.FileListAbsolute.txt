@@ -7,3 +7,8 @@ C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\obj\Debug\Messenger.DataLayer.Sql.csprojResolveAssemblyReference.cache
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\obj\Debug\Messenger.DataLayer.Sql.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\obj\Debug\Messenger.DataLayer.Sql.pdb
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\bin\Debug\NLog.config
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\bin\Debug\NLog.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\bin\Debug\TestLog.exe
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\bin\Debug\TestLog.pdb
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql\bin\Debug\NLog.xml

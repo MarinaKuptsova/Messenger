@@ -9,7 +9,6 @@ namespace Messenger.Model
         public string LastName { get; set; }
         public string Password { get; set; }
         public Guid Photo { get; set; }
-        public int IsActive { get; set; }
     }
 }
 

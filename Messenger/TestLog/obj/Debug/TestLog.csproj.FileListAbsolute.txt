@@ -1,0 +1,9 @@
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\NLog.config
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\TestLog.exe.config
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\TestLog.exe
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\TestLog.pdb
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\NLog.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\bin\Debug\NLog.xml
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\obj\Debug\TestLog.csprojResolveAssemblyReference.cache
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\obj\Debug\TestLog.exe
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\TestLog\obj\Debug\TestLog.pdb

@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Model", "Messenge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.DataLayer.Sql.Tests", "Messenger.DataLayer.Sql.Tests\Messenger.DataLayer.Sql.Tests.csproj", "{4F869325-1786-4EE4-948D-5E84BEDAA3A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Api", "Messenger.Api\Messenger.Api.csproj", "{8A595DC3-86C5-4090-A889-189F7027D357}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Api", "Messenger.Api\Messenger.Api.csproj", "{41430DBA-30DA-4F75-BB0B-0642825C5DC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLog", "TestLog\TestLog.csproj", "{8E2265CC-FABA-416C-A200-8724CFF778C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Client", "Messenger.Client\Messenger.Client.csproj", "{D38C39B4-2A2C-494C-83D0-661734879DEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +39,18 @@ Global
 		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F869325-1786-4EE4-948D-5E84BEDAA3A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A595DC3-86C5-4090-A889-189F7027D357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A595DC3-86C5-4090-A889-189F7027D357}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A595DC3-86C5-4090-A889-189F7027D357}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A595DC3-86C5-4090-A889-189F7027D357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41430DBA-30DA-4F75-BB0B-0642825C5DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41430DBA-30DA-4F75-BB0B-0642825C5DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41430DBA-30DA-4F75-BB0B-0642825C5DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41430DBA-30DA-4F75-BB0B-0642825C5DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2265CC-FABA-416C-A200-8724CFF778C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2265CC-FABA-416C-A200-8724CFF778C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2265CC-FABA-416C-A200-8724CFF778C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2265CC-FABA-416C-A200-8724CFF778C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38C39B4-2A2C-494C-83D0-661734879DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38C39B4-2A2C-494C-83D0-661734879DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38C39B4-2A2C-494C-83D0-661734879DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38C39B4-2A2C-494C-83D0-661734879DEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

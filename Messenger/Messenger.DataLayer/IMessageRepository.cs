@@ -7,10 +7,12 @@ using Messenger.Model;
 
 namespace Messenger.DataLayer
 {
-    interface IMessageRepository
+    public interface IMessageRepository
     {
-        void Create(Message message, Guid userFromId, Guid userToId);
-        void Delete(Guid id);
-        IEnumerable<Message> GetUsersMessages(Guid userId);
+        Message Create(string messageText, Guid userFromId, Guid groupToId);
+        Message CreateWithFile(string messageText, Guid userFromId, Guid groupToId, Files file);
+        void Delete(Guid messageId);
+        //Message GetMessage(Guid messageId);
+        
     }
 }

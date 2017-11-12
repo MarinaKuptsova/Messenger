@@ -8,7 +8,7 @@ using Messenger.Model;
 
 namespace Messenger.DataLayer.Sql
 {
-    class GroupsRepository : IGroupsRepository
+    public class GroupsRepository : IGroupsRepository
     {
         private readonly string _connectionString;
         private readonly IUsersRepository _usersRepository;
@@ -34,7 +34,7 @@ namespace Messenger.DataLayer.Sql
             }
         }
 
-        public void Create(IEnumerable<Guid> members, string name)
+        public Group Create(IEnumerable<Guid> members, string name)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -51,7 +51,7 @@ namespace Messenger.DataLayer.Sql
                     {
                         command.Transaction = transaction;
                         command.CommandText =
-                            "insert into Group (Id, CreateDate, GroupName) values (@Id, @CreateDate, @GroupName)";
+                            "insert into Groups (Id, CreateDate, GroupName) values (@Id, @CreateDate, @GroupName)";
                         command.Parameters.AddWithValue("@Id", group.Id);
                         command.Parameters.AddWithValue("@CreateDate", group.CreateDate);
                         command.Parameters.AddWithValue("@GroupName", group.GroupName);
@@ -62,20 +62,45 @@ namespace Messenger.DataLayer.Sql
                         using (var command = connection.CreateCommand())
                         {
                             command.Transaction = transaction;
-                            command.CommandText = "insert into UserGroup (GroupId, UserId) values (@GroupId, @UserId)";
+                            command.CommandText = "insert into UserGroup(GroupId, UserId) values (@GroupId, @UserId)";
                             command.Parameters.AddWithValue("@GroupId", group.Id);
                             command.Parameters.AddWithValue("@UserId", userId);
                             command.ExecuteNonQuery();
                         }
                     }
                     transaction.Commit();
+                    return group;
                 }
             }
         }
 
         public void DeleteChat(Guid groupId)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText = "delete from UserGroup where GroupId=@groupId";
+                        command.Parameters.AddWithValue("@groupId", groupId);
+                        command.ExecuteNonQuery();
+                    }
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.Transaction = transaction;
+                        command.CommandText =
+                            "delete from Groups where Id=@id";
+                        command.Parameters.AddWithValue("@id", groupId);
+                        command.ExecuteNonQuery();
+
+                    }
+                    transaction.Commit();
+                }
+                
+            }
         }
 
         public void DeleteMember(Guid memberId, Guid groupId)
@@ -93,9 +118,91 @@ namespace Messenger.DataLayer.Sql
             }
         }
 
-        public IEnumerable<Group> GetUserChats(Guid userId)
+        public List<User> GetChatMembers(Guid groupId)
         {
-            throw new NotImplementedException();
+            List<User> listUsers = new List<User>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "select ug.UserId as Id, u.FirstName, u.LastName, u.Password, u.Photo from UserGroup ug inner join Users u on ug.UserId=u.Id where ug.GroupId=@id;";
+                    command.Parameters.AddWithValue("@id", groupId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        try
+                        {
+                            while (reader.Read())
+                            {
+                                User user = new User();
+                                user.Id = reader.GetGuid(reader.GetOrdinal("Id"));
+                                user.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                                user.LastName = reader.GetString(reader.GetOrdinal("LastName"));
+                                user.Photo = reader.GetGuid(reader.GetOrdinal("Photo"));
+                                user.Password = reader.GetString(reader.GetOrdinal("Password"));
+                                listUsers.Add(user);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                        
+                    }
+                }
+            }
+            return listUsers;
         }
+
+        public List<Message> GetUsersMessagesInGroup(Guid groupId)
+        {
+            var usersMessages = new List<Message>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "select * from Message where MessageToGroupId=@id order by SendTime";
+                    command.Parameters.AddWithValue("@id", groupId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(reader.GetOrdinal("AttachedFiles")))
+                            {
+                                var message = new Message()
+                                {
+                                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                                    MessageText = reader.GetString(reader.GetOrdinal("MessageText")),
+                                    MessageFromUserId = reader.GetGuid(reader.GetOrdinal("MessageFromUserId")),
+                                    MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
+                                    SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime")),
+                                    AttachedFile = reader.GetGuid(reader.GetOrdinal("AttachedFiles"))
+                                };
+                                usersMessages.Add(message);
+                            }
+                            else
+                            {
+                                var message = new Message()
+                                {
+                                    Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                                    MessageText = reader.GetString(reader.GetOrdinal("MessageText")),
+                                    MessageFromUserId = reader.GetGuid(reader.GetOrdinal("MessageFromUserId")),
+                                    MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
+                                    SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime"))
+                                };
+                                usersMessages.Add(message);
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            return usersMessages;
+        }
+
     }
 }
