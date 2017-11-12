@@ -43,6 +43,7 @@
                      HorizontalAlignment="Stretch"></TextBox>
             <Button Grid.Column="1"
                     Style="{StaticResource MaterialDesignFlatButton}">Написать</Button>
+        
         </Grid>
         
         <Grid Grid.Column="1"
