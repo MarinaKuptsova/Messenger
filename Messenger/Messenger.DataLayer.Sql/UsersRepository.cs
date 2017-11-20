@@ -206,6 +206,80 @@ namespace Messenger.DataLayer.Sql
             }
             return groups;
         }
+
+        public User Login(string FirstName, string LastName, string Password)
+        {
+            logger.Debug("Аутентификация...");
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                }
+                catch (Exception ex)
+                {
+                    logger.Error("Не удаётся подключиться к базе...{0}", ex.Message);
+                }
+                
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select * from Users where FirstName=@name and LastName=@lastname and Password=@password";
+                    command.Parameters.AddWithValue("@name", FirstName);
+                    command.Parameters.AddWithValue("@lastname", LastName);
+                    command.Parameters.AddWithValue("@password", Password);
+                    logger.Info("Получение данных...");
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            logger.Error("Пользователь с таким именем и паролем не найден...");
+                            return null;
+                        }
+                        var user = new User()
+                        {
+                            Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                            Photo = reader.GetGuid(reader.GetOrdinal("Photo")),
+                            FirstName = FirstName,
+                            LastName = LastName,
+                            Password = Password
+                        };
+                        return user;
+                        
+                        
+                    }
+                }
+            }
+        }
+
+        public List<User> GetAllUsers()
+        {
+            var AllUsers = new List<User>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                logger.Debug("Соединение с базой...");
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select * from Users";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var user = new User()
+                            {
+                                Id = reader.GetGuid(reader.GetOrdinal("Id")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Password = reader.GetString(reader.GetOrdinal("Password")),
+                                Photo = reader.GetGuid(reader.GetOrdinal("Photo"))
+                            };
+                            AllUsers.Add(user);
+                        }
+                    }
+                }
+            }
+            return AllUsers;
+        }
     }
 }
 

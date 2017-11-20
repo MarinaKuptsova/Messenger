@@ -137,6 +137,35 @@ namespace Messenger.DataLayer.Sql.Tests
 
         }
 
+        [TestMethod]
+        public void ShouldLoginUser()
+        {
+            var user = new User
+            {
+                FirstName = "test",
+                Password = "password",
+                LastName = "test2345"
+            };
+
+            var usersRepository = new UsersRepository(ConnectionString);
+            var newUser = usersRepository.Create(user);
+
+            _tempUsers.Add(user.Id);
+
+            var testUser = new User
+            {
+                FirstName = "test",
+                Password = "password",
+                LastName = "test2345"
+            };
+
+            var result = usersRepository.Login(testUser.FirstName, testUser.LastName, testUser.Password);
+
+            Assert.AreEqual(newUser.Id, result.Id);
+            Assert.AreEqual(newUser.Photo, result.Photo);
+            Assert.AreEqual(newUser.FirstName, result.FirstName);
+        }
+
         [TestCleanup]
         public void Clean()
         {

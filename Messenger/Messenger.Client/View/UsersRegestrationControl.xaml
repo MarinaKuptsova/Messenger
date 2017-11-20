@@ -4,26 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Messenger.Client.View"
+             xmlns:l="clr-namespace:Messenger.Client.DataAccess"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Height="300" Width="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="{x:Type PasswordBox}"
-                   BasedOn="{StaticResource MaterialDesignPasswordBox}">
-                <Setter Property="Margin"
-                        Value="0 8 0 8" />
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -35,31 +34,47 @@
                  Grid.Row="0"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Stretch"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Text="{Binding Path=newUser.FirstName}"/>
         <TextBox materialDesign:HintAssist.Hint="Фамилия"
                  Grid.Row="1"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Stretch"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Text="{Binding Path=newUser.LastName}" />
         <PasswordBox materialDesign:HintAssist.Hint="Пароль"
                      Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                      Grid.Row="2"
                      HorizontalAlignment="Stretch"
-                     VerticalAlignment="Center"></PasswordBox>
+                     VerticalAlignment="Center"                     
+                     l:PasswordBoxAssistant.BindPassword="True"
+                     l:PasswordBoxAssistant.BoundPassword="{Binding Path=newUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                     
+                     
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0"
-                   Margin="40 0 40 0"></Image>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                   Margin="40 0 40 0"
+                   Source="../Images/pikachu.png"></Image>
+            <Button Style="{StaticResource MaterialDesignRaisedButton}"
                     Grid.Column="1"
-                    Margin="8 0 8 0">Добавить фото</Button>
+                    Margin="16 0 0 0"
+                    Command="{Binding OpenFileDialogCommand}"
+                    CommandParameter="{Binding }">Добавить фото</Button>
             
         </Grid>
         <Button Grid.Row="4"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="20 0 20 0">Зарегистрироваться</Button>
+                Margin="20 0 20 0"
+                Command="{Binding CreateUserCommand}"
+                CommandParameter="{Binding}">Зарегистрироваться</Button>
+        <Button Grid.Row="5"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Margin="20 0 20 0"
+                Command="{Binding ToUserLoginCommand}"
+                CommandParameter="{Binding}">Уже зарегистрированы?</Button>
     </Grid>
 </UserControl>

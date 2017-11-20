@@ -13,11 +13,12 @@ namespace Messenger.Client.ViewModel
         public ScreenTypes CurrentScreenType { get; set; }
         private DialogsViewModel dialogsVM;
         private UsersViewModel usersVM;
+        private CreateChatViewModel _createChatViewModel;
         private UsersRegistrationViewModel _usersRegistrationViewModel;
 
         public MainViewModel()
         {
-            CurrentScreenType = ScreenTypes.Dialogs;
+            CurrentScreenType = ScreenTypes.Register;
         }
 
         public MainWindow Window
@@ -52,13 +53,16 @@ namespace Messenger.Client.ViewModel
             switch (CurrentScreenType)
             {
                 case ScreenTypes.Dialogs:
-                    screen = dialogsVM ?? (dialogsVM = new DialogsViewModel());
+                    screen = dialogsVM ?? (dialogsVM = new DialogsViewModel(this));
                     break;
                 case ScreenTypes.Login:
-                    screen = usersVM ?? (usersVM = new UsersViewModel());
+                    screen = usersVM ?? (usersVM = new UsersViewModel(this));
                     break;
                 case ScreenTypes.Register:
-                    screen = _usersRegistrationViewModel ?? (_usersRegistrationViewModel = new UsersRegistrationViewModel());
+                    screen = _usersRegistrationViewModel ?? (_usersRegistrationViewModel = new UsersRegistrationViewModel(this));
+                    break;
+                case ScreenTypes.Group:
+                    screen = _createChatViewModel ?? (_createChatViewModel = new CreateChatViewModel(this));
                     break;
                 default:
                     screen = null;

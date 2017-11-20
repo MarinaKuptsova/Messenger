@@ -29,6 +29,13 @@ namespace Messenger.Api.Controllers
         }
 
         [HttpGet]
+        [Route("api/user")]
+        public List<User> GetAllUsers()
+        {
+            return _usersRepository.GetAllUsers();
+        }
+        
+        [HttpGet]
         [Route("api/user/{id}")]
         public User Get(Guid id)
         {
@@ -56,6 +63,21 @@ namespace Messenger.Api.Controllers
         public void Delete(Guid id)
         {
             _usersRepository.Delete(id);
+        }
+
+        /// <summary>
+        /// Get group by id
+        /// </summary>
+        /// <param name="FirstName">FirstName</param>
+        /// <param name="LastName">LastName</param>
+        /// <param name="Password">Password</param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("api/user/{FirstName}/{LastName}/{Password}")]
+        public User Login(string FirstName, string LastName, string Password)
+        {
+            return _usersRepository.Login(FirstName, LastName, Password);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Messenger.Client.Model
     {
         Dialogs,
         Login,
-        Register
+        Register,
+        Group
     }
 }

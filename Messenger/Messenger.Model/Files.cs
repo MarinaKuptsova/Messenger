@@ -6,6 +6,7 @@ namespace Messenger.Model
     {
         public Guid Id { get; set; }
         public Guid Owner { get; set; }
+        public string Path { get; set; }
     }
 
 }

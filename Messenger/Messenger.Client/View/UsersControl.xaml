@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:l="clr-namespace:Messenger.Client.DataAccess"
              xmlns:local="clr-namespace:Messenger.Client.View"
              mc:Ignorable="d"
              Height="300"
@@ -36,19 +37,32 @@
                  Grid.Row="0"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Stretch"
+                 Text="{Binding Path=OldUser.FirstName}"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
         <TextBox materialDesign:HintAssist.Hint="Фамилия"
                  Grid.Row="1"
                  VerticalAlignment="Center"
                  HorizontalAlignment="Stretch"
+                 Text="{Binding Path=OldUser.LastName}"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <!--<TextBox materialDesign:HintAssist.Hint="Пароль"
+                 Grid.Row="2"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Stretch"
+                 Text="{Binding Path=OldUser.Password}"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
         <PasswordBox materialDesign:HintAssist.Hint="Пароль"
                      Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                      Grid.Row="2"
                      HorizontalAlignment="Stretch"
-                     VerticalAlignment="Center"></PasswordBox>
+                     VerticalAlignment="Center"
+                     l:PasswordBoxAssistant.BindPassword="True"
+                     l:PasswordBoxAssistant.BoundPassword="{Binding Path=OldUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                     
         <Button Grid.Row="4"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="20 0 20 0">Войти</Button>
+                Margin="20 0 20 0"
+                Command="{Binding LoginUserCommand}"
+                CommandParameter="{Binding}">Войти</Button>
     </Grid>
 </UserControl>

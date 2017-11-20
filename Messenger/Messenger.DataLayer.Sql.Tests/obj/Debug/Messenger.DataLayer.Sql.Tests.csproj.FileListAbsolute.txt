@@ -9,6 +9,6 @@ C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\obj\Debug\Messenger.DataLayer.Sql.Tests.csprojResolveAssemblyReference.cache
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\obj\Debug\Messenger.DataLayer.Sql.Tests.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\obj\Debug\Messenger.DataLayer.Sql.Tests.pdb
-C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\bin\Debug\NLog.config
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\bin\Debug\NLog.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\bin\Debug\NLog.xml
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.DataLayer.Sql.Tests\bin\Debug\NLog.config

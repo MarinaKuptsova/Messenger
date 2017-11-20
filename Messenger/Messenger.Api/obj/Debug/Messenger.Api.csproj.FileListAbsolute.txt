@@ -62,7 +62,6 @@ C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\obj\Debug\Messenger.Api.csprojResolveAssemblyReference.cache
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\obj\Debug\Messenger.Api.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\obj\Debug\Messenger.Api.pdb
-C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\NLog.config
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\NLog.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\NLog.xml
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\ru\System.Web.Razor.resources.dll
@@ -74,3 +73,4 @@ C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\ru\System.Net.Http.Formatting.resources.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\ru\System.Web.Http.resources.dll
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\ru\System.Web.Http.WebHost.resources.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Api\bin\NLog.config
