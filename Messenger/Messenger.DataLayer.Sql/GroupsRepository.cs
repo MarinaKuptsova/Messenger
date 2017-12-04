@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Messenger.Model;
+using System.Windows;
 
 namespace Messenger.DataLayer.Sql
 {
@@ -164,7 +165,9 @@ namespace Messenger.DataLayer.Sql
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        "select * from Message where MessageToGroupId=@id order by SendTime";
+                        "select * from Message m " +
+                        "left join Files f on m.AttachedFiles = f.Id " +
+                        "where MessageToGroupId = @id order by SendTime";
                     command.Parameters.AddWithValue("@id", groupId);
                     using (var reader = command.ExecuteReader())
                     {
@@ -175,11 +178,17 @@ namespace Messenger.DataLayer.Sql
                                 var message = new Message()
                                 {
                                     Id = reader.GetGuid(reader.GetOrdinal("Id")),
-                                    MessageText = reader.GetString(reader.GetOrdinal("MessageText")),
                                     MessageFromUserId = reader.GetGuid(reader.GetOrdinal("MessageFromUserId")),
                                     MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
                                     SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime")),
-                                    AttachedFile = reader.GetGuid(reader.GetOrdinal("AttachedFiles"))
+                                    AttachedFile = reader.GetGuid(reader.GetOrdinal("AttachedFiles")),
+                                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                                    AttachedFileName = String.Concat(reader.GetString(reader.GetOrdinal("Name")), reader.GetString(reader.GetOrdinal("Type"))),
+                                    TextblockVisibility = Visibility.Collapsed,
+                                    ButtonVisibility = Visibility.Visible,
+                                    TextblockFileNameVisibility = Visibility.Visible,
+                                    IsRead = reader.GetByte(reader.GetOrdinal("IsRead"))
+                                    
                                 };
                                 usersMessages.Add(message);
                             }
@@ -191,7 +200,12 @@ namespace Messenger.DataLayer.Sql
                                     MessageText = reader.GetString(reader.GetOrdinal("MessageText")),
                                     MessageFromUserId = reader.GetGuid(reader.GetOrdinal("MessageFromUserId")),
                                     MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
-                                    SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime"))
+                                    SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime")),
+                                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                                    ButtonVisibility = Visibility.Collapsed,
+                                    TextblockFileNameVisibility = Visibility.Collapsed,
+                                    TextblockVisibility = Visibility.Visible,
+                                    IsRead = reader.GetByte(reader.GetOrdinal("IsRead"))
                                 };
                                 usersMessages.Add(message);
                             }

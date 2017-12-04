@@ -45,24 +45,38 @@
                  HorizontalAlignment="Stretch"
                  Text="{Binding Path=OldUser.LastName}"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-        <!--<TextBox materialDesign:HintAssist.Hint="Пароль"
-                 Grid.Row="2"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Stretch"
-                 Text="{Binding Path=OldUser.Password}"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
-        <PasswordBox materialDesign:HintAssist.Hint="Пароль"
+       <PasswordBox materialDesign:HintAssist.Hint="Пароль"
                      Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                      Grid.Row="2"
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Center"
                      l:PasswordBoxAssistant.BindPassword="True"
                      l:PasswordBoxAssistant.BoundPassword="{Binding Path=OldUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                     
-        <Button Grid.Row="4"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                Margin="20 0 20 0"
-                Command="{Binding LoginUserCommand}"
-                CommandParameter="{Binding}">Войти</Button>
+        <TextBlock Grid.Row="3"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Bottom"
+                   Margin="10 0 10 0"
+                   Text="{Binding Path=WarningText}"/>
+                  
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Margin="4 4 4 4"
+                    IsDefault="True"
+                    Command="{Binding LoginUserCommand}"
+                    CommandParameter="{Binding}">Войти</Button>
+            <Button Grid.Column="1"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Margin="4 4 4 4"
+                    IsCancel="True"
+                    Command="{Binding BackCommand}"
+                    CommandParameter="{Binding}">Назад</Button>
+        </Grid>
+        
     </Grid>
 </UserControl>

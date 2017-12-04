@@ -13,6 +13,8 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/jquery-3.2.1.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/jquery-3.2.1.slim.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/jquery-3.2.1.slim.min.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/jquery.signalr-2.2.2.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/jquery.signalr-2.2.2.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("scripts/nugetexample.js")]
 
 

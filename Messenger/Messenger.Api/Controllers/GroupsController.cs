@@ -59,9 +59,16 @@ namespace Messenger.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/group/{groupId}/user/{memberId}")]
-        public void AddMember(Guid memberId, Guid groupId)//не работает
+        public void AddMember(Guid memberId, Guid groupId)
         {
             _groupsRepository.AddMember(memberId, groupId);
+        }
+
+        [HttpDelete]
+        [Route("api/group/{groupId}/user/{memberId}")]
+        public void DeleteMember(Guid memberId, Guid groupId)
+        {
+            _groupsRepository.DeleteMember(memberId, groupId);
         }
 
         [HttpDelete]

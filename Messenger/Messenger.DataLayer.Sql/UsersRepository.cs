@@ -17,9 +17,9 @@ namespace Messenger.DataLayer.Sql
             _connectionString = connectionString;
         }
 
-        public User Create(User user)
+        public User Create(User user, byte[] photo, string name, string type)
         {
-            logger.Debug("Создание пользователя...");
+            logger.Debug("Создание пользователя");
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
@@ -52,10 +52,13 @@ namespace Messenger.DataLayer.Sql
                     using (var command = connection.CreateCommand())
                     {
                         command.Transaction = transaction;
-                        command.CommandText = "insert into Files (Id, Owner)" +
-                                              "values (@Id, @Owner)";
+                        command.CommandText = "insert into Files (Id, Owner, UserFile, Name, Type)" +
+                                              "values (@Id, @Owner, @UserFile, @name, @type)";
                         command.Parameters.AddWithValue("@Id", file.Id);
                         command.Parameters.AddWithValue("@Owner", user.Id);
+                        command.Parameters.AddWithValue("@UserFile", photo);
+                        command.Parameters.AddWithValue("@name", name);
+                        command.Parameters.AddWithValue("@type", type);
                         command.ExecuteNonQuery();
                     }
                     using (var command = connection.CreateCommand())
@@ -130,26 +133,30 @@ namespace Messenger.DataLayer.Sql
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "select * from Users where Id =@Id";
+                    command.CommandText = "select * from Users u join Files f on u.Photo = f.Id where u.Id = @id";
                     command.Parameters.AddWithValue("@Id", id);
                     using (var reader = command.ExecuteReader())
                     {
                         if (!reader.Read())
                             throw new ArgumentException($"Пользователь с Id {id} не найден");
-                        return new User
+                        var user = new User()
                         {
-                            FirstName = reader.GetString(reader.GetOrdinal("FirstName"))  ,
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName")),
                             Id = reader.GetGuid(reader.GetOrdinal("Id")),
                             Photo = reader.GetGuid(reader.GetOrdinal("Photo")),
-                            Password = reader.GetString(reader.GetOrdinal("Password"))
+                            Password = reader.GetString(reader.GetOrdinal("Password")),
+                            Ava = (byte[])reader["UserFile"]
                         };
+
+                        return user;
+
                     }
                 }
             }
         }
 
-        public void Update(User user, User newUser)
+        public User Update(User user, User newUser)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -160,6 +167,8 @@ namespace Messenger.DataLayer.Sql
                     if (newUser.LastName == null) newUser.LastName = user.LastName;
                     if (newUser.Password == null) newUser.Password = user.Password;
                     
+                    
+                    
                     command.CommandText =
                         "update Users set FirstName=@FirstName, LastName=@LastName, Password=@Password where Id=@Id";
                     command.Parameters.AddWithValue("@FirstName", newUser.FirstName);
@@ -168,7 +177,7 @@ namespace Messenger.DataLayer.Sql
                     command.Parameters.AddWithValue("@Id", user.Id);
                     command.ExecuteNonQuery();
                 }
-
+                return newUser;
             }
         }
 
@@ -223,7 +232,9 @@ namespace Messenger.DataLayer.Sql
                 
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "select * from Users where FirstName=@name and LastName=@lastname and Password=@password";
+                    command.CommandText = "select * from Users u " +
+                                          "join Files f on u.Photo=f.Id " +
+                                          "where FirstName=@name and LastName=@lastname and Password=@password";
                     command.Parameters.AddWithValue("@name", FirstName);
                     command.Parameters.AddWithValue("@lastname", LastName);
                     command.Parameters.AddWithValue("@password", Password);
@@ -241,11 +252,10 @@ namespace Messenger.DataLayer.Sql
                             Photo = reader.GetGuid(reader.GetOrdinal("Photo")),
                             FirstName = FirstName,
                             LastName = LastName,
-                            Password = Password
+                            Password = Password,
+                            Ava = (byte[])reader["UserFile"]
                         };
                         return user;
-                        
-                        
                     }
                 }
             }
@@ -260,7 +270,7 @@ namespace Messenger.DataLayer.Sql
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "select * from Users";
+                    command.CommandText = "select * from Users u join Files f on u.Photo=f.Id";
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -271,7 +281,8 @@ namespace Messenger.DataLayer.Sql
                                 FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                                 LastName = reader.GetString(reader.GetOrdinal("LastName")),
                                 Password = reader.GetString(reader.GetOrdinal("Password")),
-                                Photo = reader.GetGuid(reader.GetOrdinal("Photo"))
+                                Photo = reader.GetGuid(reader.GetOrdinal("Photo")),
+                                Ava = (byte[])reader["UserFile"]
                             };
                             AllUsers.Add(user);
                         }

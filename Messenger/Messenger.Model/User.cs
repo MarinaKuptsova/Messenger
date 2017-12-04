@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.Windows.Media.Imaging;
+
+//using System.Windows.Media.Imaging;
 
 namespace Messenger.Model
 {
@@ -9,6 +13,8 @@ namespace Messenger.Model
         public string LastName { get; set; }
         public string Password { get; set; }
         public Guid Photo { get; set; }
+        public byte[] Ava { get; set; }
+        public BitmapImage UserBitmapImage { get; set; }
     }
 }
 

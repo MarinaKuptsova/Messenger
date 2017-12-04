@@ -17,6 +17,8 @@ namespace Messenger.DataLayer.Sql.Tests
         public void ShouldCreateGroup()
         {
             const string name = "чат";
+            string nameF = "photo";
+            string type = ".jpg";
             var group = new Group()
             {
                 GroupName = name
@@ -33,9 +35,10 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password2",
                 LastName = "test3"
             };
+            byte[] photo = new byte[0];
             var repository = new UsersRepository(ConnectionString);
-            var result1 = repository.Create(user1);
-            var result2 = repository.Create(user2);
+            var result1 = repository.Create(user1, photo, nameF, type);
+            var result2 = repository.Create(user2, photo, nameF, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -56,6 +59,8 @@ namespace Messenger.DataLayer.Sql.Tests
         public void ShouldGetChatMembers()
         {
             const string name = "чат";
+            string nameF = "photo";
+            string type = ".jpg";
             var user1 = new User()
             {
                 FirstName = "test1",
@@ -68,9 +73,10 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password2",
                 LastName = "test3"
             };
+            byte[] photo = new byte[0];
             var repository = new UsersRepository(ConnectionString);
-            var result1 = repository.Create(user1);
-            var result2 = repository.Create(user2);
+            var result1 = repository.Create(user1, photo, nameF, type);
+            var result2 = repository.Create(user2, photo, nameF, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -95,6 +101,8 @@ namespace Messenger.DataLayer.Sql.Tests
         public void ShouldAddMember()
         {
             const string name = "чат";
+            string nameF = "photo";
+            string type = ".jpg";
             var user1 = new User()
             {
                 FirstName = "test1",
@@ -113,10 +121,11 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password3",
                 LastName = "testtest3"
             };
+            byte[] photo = new byte[0];
             var repository = new UsersRepository(ConnectionString);
-            var result1 = repository.Create(user1);
-            var result2 = repository.Create(user2);
-            var result3 = repository.Create(user3);
+            var result1 = repository.Create(user1, photo, nameF, type);
+            var result2 = repository.Create(user2, photo, nameF, type);
+            var result3 = repository.Create(user3, photo, nameF, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -141,6 +150,8 @@ namespace Messenger.DataLayer.Sql.Tests
         public void ShouldDeleteMember()
         {
             const string name = "чат";
+            string nameF = "photo";
+            string type = ".jpg";
             var user1 = new User()
             {
                 FirstName = "test1",
@@ -159,10 +170,11 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password3",
                 LastName = "testtest3"
             };
+            byte[] photo = new byte[0];
             var repository = new UsersRepository(ConnectionString);
-            var result1 = repository.Create(user1);
-            var result2 = repository.Create(user2);
-            var result3 = repository.Create(user3);
+            var result1 = repository.Create(user1, photo, nameF, type);
+            var result2 = repository.Create(user2, photo, nameF, type);
+            var result3 = repository.Create(user3, photo, nameF, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -189,6 +201,8 @@ namespace Messenger.DataLayer.Sql.Tests
         {
             string messageText1 = "Привет. Как дела?";
             string messageText2 = "Привет. Нормально.";
+
+            byte status = 1;
             var user1 = new User()
             {
                 FirstName = "test1",
@@ -202,10 +216,12 @@ namespace Messenger.DataLayer.Sql.Tests
                 LastName = "test3"
             };
             var file3 = new Files();
-
+            byte[] photo = new byte[0];
+            string name = "photo";
+            string type = ".jpg";
             var usersRepository = new UsersRepository(ConnectionString);
-            var result1 = usersRepository.Create(user1);
-            var result2 = usersRepository.Create(user2);
+            var result1 = usersRepository.Create(user1, photo, name, type);
+            var result2 = usersRepository.Create(user2, photo, name, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -217,8 +233,8 @@ namespace Messenger.DataLayer.Sql.Tests
             _tempGroups.Add(groupResult.Id);
 
             var messageRepository = new MessageRepository(ConnectionString);
-            var messageResult1 = messageRepository.CreateWithFile(messageText1, result1.Id, groupResult.Id, file3);
-            var messageResult2 = messageRepository.Create(messageText2, result2.Id, groupResult.Id);
+            var messageResult1 = messageRepository.CreateWithFile(result1.Id, groupResult.Id, photo, status, name, type);
+            var messageResult2 = messageRepository.Create(messageText2, result2.Id, groupResult.Id, status);
 
             _tempMessages.Add(messageResult1.Id);
             _tempMessages.Add(messageResult2.Id);

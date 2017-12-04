@@ -11,5 +11,6 @@ namespace Messenger.Model
         public string messageText { get; set; }
         public Guid userFromId { get; set; }
         public Guid groupToId { get; set; }
+        public byte status { get; set; } 
     }
 }

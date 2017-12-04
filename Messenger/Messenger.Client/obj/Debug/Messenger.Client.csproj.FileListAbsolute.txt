@@ -50,3 +50,12 @@ C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\obj\Debug\View\CreateChatControl.g.cs
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\obj\Debug\View\CreateChatControl.baml
 C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Owin.dll
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.xml
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\obj\Debug\View\UpdateUserView.g.cs
+C:\Users\302\Documents\Visual Studio 2015\Projects\Messenger\Messenger\Messenger.Client\obj\Debug\View\UpdateUserView.baml

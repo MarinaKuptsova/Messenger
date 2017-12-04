@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Messenger.Client.View"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="600"
@@ -22,34 +23,103 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="VerticalSeparatorStyle"
+                   TargetType="{x:Type Separator}"
+                   BasedOn="{StaticResource {x:Type Separator}}">
+                <Setter Property="Margin"
+                        Value="6,0,6,0" />
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <TransformGroup>
+                            <TransformGroup.Children>
+                                <TransformCollection>
+                                    <RotateTransform Angle="90" />
+                                </TransformCollection>
+                            </TransformGroup.Children>
+                        </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ContextMenu x:Key="ContextMenu">
+                <MenuItem Header="Редактировать"
+                          Command="{Binding Path=DataContext.ToUpdateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          CommandParameter="{Binding}"/>
+
+                <MenuItem Header="Выйти"
+                          Command="{Binding Path=DataContext.ExitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          CommandParameter="{Binding }" />
+
+            </ContextMenu>
+
+            <Style x:Key="CustomStyle"
+                   TargetType="{x:Type Grid}">
+
+                <Setter Property="ContextMenu"
+                        Value="{StaticResource ContextMenu}" />
+
+            </Style>
         </ResourceDictionary>
-    </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="75*"></RowDefinition>
-            <RowDefinition Height="92*"></RowDefinition>
+        </UserControl.Resources>
+    
+    <materialDesign:DialogHost Identifier="UpdateUserDialog">
+        <materialDesign:DialogHost.DialogContent>
+            <local:UpdateUserView/>
+        </materialDesign:DialogHost.DialogContent>
+        
+        <Grid>
+            
+            <Grid.RowDefinitions>
+            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
             <RowDefinition Height="358*"></RowDefinition>
             <RowDefinition Height="75*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+        <Separator Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Stretch"
+                   Style="{StaticResource MaterialDesignDarkSeparator}"/>
+        <Separator Grid.Row="3"
+                   Grid.Column="1"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Stretch"
+                   Style="{StaticResource MaterialDesignDarkSeparator}"/>
+        <Separator Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.RowSpan="4"
+                   VerticalAlignment="Stretch"
+                   HorizontalAlignment="Right"
+                   Style="{DynamicResource VerticalSeparatorStyle}" />
+
         <Grid Grid.Column="0"
-              Grid.Row="0">
+              Grid.Row="0"
+              Style="{StaticResource CustomStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0"></Image>
-            <TextBlock Grid.Column="1">Привязать пользователя </TextBlock>
-        </Grid>
+            <Image Grid.Column="0"
+                   Source="{Binding Path=AvatarUser}"
+                   Margin="4 4 4 12"></Image>
+            <TextBlock Grid.Column="1"
+                       Margin="0 10 0 0"
+                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                       Text="{Binding Path=GlobalUser.FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBlock Grid.Column="1"
+                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                       Margin="0 45 0 0"
+                       Text="{Binding Path=GlobalUser.LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            </Grid>
 
         <Grid Grid.Column="0"
               Grid.Row="1">
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    Margin="20 0 20 0"
+                    Margin="40 0 40 0"
                     Command="{Binding CreateChatCommand}"
                     CommandParameter="{Binding}">Создать беседу</Button>
         </Grid>
@@ -59,8 +129,9 @@
               Margin="0,0,0,0">
             <TextBlock HorizontalAlignment="Stretch"
                        VerticalAlignment="Center"
-                       Style="{StaticResource MaterialDesignHeadlineTextBlock}">Название бседы привязать</TextBlock>
-        </Grid>
+                       Text="{Binding Path=CurrentGroup.GroupName}"
+                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+            </Grid>
 
         <Grid Grid.Row="1"
               Grid.Column="1"
@@ -72,43 +143,80 @@
               Grid.Column="1"
               Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0"
+            <Button Grid.Column="0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Height="Auto"
+                    Width="Auto"
+                    Margin="10 20 10 20"
+                    Command="{Binding SendFileCommand}"
+                    CommandParameter="{Binding}">
+                <materialDesign:PackIcon Kind="Paperclip"
+                                         Width="25"
+                                         Height="25"
+                                         HorizontalAlignment="Center" />
+            </Button>
+            <TextBox Grid.Column="1"
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Center"
-                     Margin="20 0 20 20"
+                     Margin="10 0 10 20"
                      materialDesign:HintAssist.Hint="Текст"
+                     Text="{Binding Path=MessageText, Mode=TwoWay}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
-            <Button Grid.Column="1"
+            <Button Grid.Column="2"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    Margin="0 5 0 25"
-                    Height="Auto">Отправить</Button>
+                    Height="Auto"
+                    Width="Auto"
+                    Command="{Binding SendMessageCommand}"
+                    CommandParameter="{Binding}"
+                    IsDefault="True"
+                    Margin="10 20 10 20">
+                <materialDesign:PackIcon Kind="Send"
+                                         Width="25"
+                                         Height="25"
+                                         HorizontalAlignment="Center"/>
+                </Button>
         </Grid>
 
-        <ItemsControl Grid.Row="1"
+        <ListView Grid.Row="2"
                       Grid.Column="0"
-                      Margin="0,0.333,0,357.667"
-                      Grid.RowSpan="2">
-            <ItemsControl.ItemTemplate>
+                      Margin="8 8 8 8"
+                      Grid.RowSpan="2"
+                      ItemsSource="{Binding UsersGroups, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding CurrentGroup}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
+                             Path=DataContext.SelectChatCommand}"
+                                           CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0"></Image>
-                        <TextBlock Grid.Column="1"></TextBlock>
-                        <TextBlock Grid.Column="2"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                           <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0"></Image>
+                            <TextBlock Grid.Column="1"
+                                       Margin="0 10 0 0"
+                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                       Text="{Binding Path=GroupName, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            <TextBlock Grid.Column="1"
+                                       Margin="0 35 0 0">Сообщение</TextBlock>
+                        </Grid>
+                    </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
 
 
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
 

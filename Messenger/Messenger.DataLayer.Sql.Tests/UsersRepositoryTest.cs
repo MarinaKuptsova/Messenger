@@ -22,10 +22,12 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password",
                 LastName = "test2"
             };
-            
+            byte[] photo = new byte[0];
+            string name = "photo";
+            string type = ".jpg";
             //act
             var repository = new UsersRepository(ConnectionString);
-            var result = repository.Create(user);
+            var result = repository.Create(user, photo, name, type);
 
             _tempUsers.Add(result.Id);
             
@@ -47,8 +49,11 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password",
                 LastName = "test2"
             };
+            byte[] photo = new byte[0];
+            string name = "photo";
+            string type = ".jpg";
             var repositiry = new UsersRepository(ConnectionString);
-            var newUser = repositiry.Create(user);
+            var newUser = repositiry.Create(user, photo, name, type);
 
             _tempUsers.Add(newUser.Id);
             var result = repositiry.Get(newUser.Id);
@@ -73,13 +78,16 @@ namespace Messenger.DataLayer.Sql.Tests
             {
                 FirstName = "testUser"
             };
+            byte[] photo = new byte[0];
+            string name = "photo";
+            string type = ".jpg";
             var repository = new UsersRepository(ConnectionString);
-            var newUser = repository.Create(user);
+            var newUser = repository.Create(user, photo, name, type);
 
             _tempUsers.Add(newUser.Id);
 
-            repository.Update(newUser, testUser);
-            var result = repository.Get(newUser.Id);
+            var result = repository.Update(newUser, testUser);
+             
 
             Assert.AreEqual(testUser.FirstName, result.FirstName);
             
@@ -108,10 +116,13 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password2",
                 LastName = "test3"
             };
+            byte[] photo = new byte[0];
+            string nameF = "photo";
+            string type = ".jpg";
             var repository = new UsersRepository(ConnectionString);
-            var result1 = repository.Create(user1);
-            var result2 = repository.Create(user2);
-            var result3 = repository.Create(user3);
+            var result1 = repository.Create(user1, photo, nameF, type);
+            var result2 = repository.Create(user2, photo, nameF, type);
+            var result3 = repository.Create(user3, photo, nameF, type);
 
             _tempUsers.Add(result1.Id);
             _tempUsers.Add(result2.Id);
@@ -146,9 +157,11 @@ namespace Messenger.DataLayer.Sql.Tests
                 Password = "password",
                 LastName = "test2345"
             };
-
+            byte[] photo = new byte[0];
+            string name = "photo";
+            string type = ".jpg";
             var usersRepository = new UsersRepository(ConnectionString);
-            var newUser = usersRepository.Create(user);
+            var newUser = usersRepository.Create(user, photo, name, type);
 
             _tempUsers.Add(user.Id);
 

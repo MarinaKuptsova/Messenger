@@ -9,10 +9,9 @@ namespace Messenger.DataLayer
 {
     public interface IMessageRepository
     {
-        Message Create(string messageText, Guid userFromId, Guid groupToId);
-        Message CreateWithFile(string messageText, Guid userFromId, Guid groupToId, Files file);
+        Message Create(string messageText, Guid userFromId, Guid groupToId, byte status);
+        Message CreateWithFile(Guid userFromId, Guid groupToId, byte[] photo, byte status, string name, string type);
         void Delete(Guid messageId);
-        //Message GetMessage(Guid messageId);
         
     }
 }

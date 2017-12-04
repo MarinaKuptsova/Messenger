@@ -6,17 +6,78 @@
              xmlns:local="clr-namespace:Messenger.Client.View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="MessageControl">
     <Grid>
-        <ItemsControl>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock></TextBlock>
-                        <TextBlock></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{Binding UsersMessages}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Height="Auto"
+                                             Width="500"
+                                             HorizontalAlignment="{Binding Orientation}"
+                                             Margin="0 0 4 4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Width="60"
+                                       Height="60"
+                                       Source="{Binding OwnerAva}"></Image>
+
+                                <TextBlock Grid.Column="1"
+                                           Grid.Row="1"
+                                           Margin="4 8 4 8"
+                                           Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                           Text="{Binding Path=MessageText, UpdateSourceTrigger=PropertyChanged}"
+                                           Visibility="{Binding TextblockVisibility}"></TextBlock>
+
+                                <TextBlock Grid.Column="1"
+                                           Grid.Row="0"
+                                           Margin="4 4 4 4"
+                                           Text="{Binding OwnerName}"></TextBlock>
+                                <TextBlock Grid.Column="1"
+                                           Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Margin="4 4 4 4"
+                                           Foreground="Gray"
+                                           Text="{Binding SendTime}"></TextBlock>
+                                <StackPanel Grid.Column="1"
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Left"
+                                            Orientation="Horizontal">
+                                    <Button Margin="4 4 4 4"
+                                            Visibility="{Binding ButtonVisibility}"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                            Command="{Binding DataContext.OpenFileCommand, ElementName=MessageControl}"
+                                            CommandParameter="{Binding}">
+                                        <materialDesign:PackIcon Kind="Download"></materialDesign:PackIcon>
+                                    </Button>
+                                    <TextBlock Margin="4 4 4 4"
+                                               Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                               Visibility="{Binding TextblockFileNameVisibility}"
+                                               Text="{Binding AttachedFileName}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+        
     </Grid>
 </UserControl>
+

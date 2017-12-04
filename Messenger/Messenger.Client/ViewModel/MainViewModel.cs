@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Messenger.Client.Model;
+using Messenger.Model;
 
 namespace Messenger.Client.ViewModel
 {
@@ -11,6 +13,10 @@ namespace Messenger.Client.ViewModel
     {
         private MainWindow _window;
         public ScreenTypes CurrentScreenType { get; set; }
+        public User MainUser { get; set; } 
+
+        public BitmapImage MainUserAva { get; set; }
+
         private DialogsViewModel dialogsVM;
         private UsersViewModel usersVM;
         private CreateChatViewModel _createChatViewModel;
@@ -19,6 +25,8 @@ namespace Messenger.Client.ViewModel
         public MainViewModel()
         {
             CurrentScreenType = ScreenTypes.Register;
+            MainUser = new User();
+            MainUserAva = new BitmapImage();
         }
 
         public MainWindow Window

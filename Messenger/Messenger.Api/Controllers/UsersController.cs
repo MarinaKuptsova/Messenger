@@ -23,9 +23,22 @@ namespace Messenger.Api.Controllers
 
         [HttpPost]
         [Route("api/user")]
-        public User Create([FromBody] User user)
+        public User Create([FromBody] UserParameters userParam)
         {
-            return _usersRepository.Create(user);
+            User user = userParam.user;
+            byte[] photo = userParam.photo;
+            var name = userParam.name;
+            var type = userParam.type;
+            return _usersRepository.Create(user, photo, name, type);
+        }
+
+        [HttpPut]
+        [Route("api/user")]
+        public User Update([FromBody]UpdateParameters users)
+        {
+            User user = users.user;
+            User newUser = users.newUser;
+            return _usersRepository.Update(user, newUser);
         }
 
         [HttpGet]
@@ -47,15 +60,6 @@ namespace Messenger.Api.Controllers
         public List<Group> GetChats(Guid id)
         {
             return _usersRepository.GetUserChats(id);
-        }
-
-        [HttpPut]
-        [Route("api/user")]
-        public void Update([FromBody]UpdateParameters users)////////////
-        {
-            User user = users.user;
-            User newUser = users.newUser;
-            _usersRepository.Update(user, newUser);
         }
 
         [HttpDelete]

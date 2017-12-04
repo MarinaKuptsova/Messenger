@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFilesRepository.cs" />
     <Compile Include="IGroupsRepository.cs" />
     <Compile Include="IMessageRepository.cs" />
     <Compile Include="IUsersRepository.cs" />

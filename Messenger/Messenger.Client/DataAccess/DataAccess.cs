@@ -23,17 +23,18 @@ namespace Messenger.Client.DataAccess
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static async Task<User> CreateUser(User user)
+        public static async Task<User> CreateUser(UserParameters userParam)
         {
+
             HttpResponseMessage response;
             response = await _client.PostAsJsonAsync("api/user",
-                new User()
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Password = user.Password,
-                    Photo = user.Photo
-                });
+               new UserParameters()
+               {
+                   photo = userParam.photo,
+                   user = userParam.user,
+                   name = userParam.name,
+                   type = userParam.type
+               });
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<User>();
@@ -72,6 +73,98 @@ namespace Messenger.Client.DataAccess
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<List<User>>().ConfigureAwait(false);
+            }
+            return null;
+        }
+
+        public static async Task<List<Group>> GetUsersChats(Guid userId)
+        {
+            var path = "api/user/" + userId + "/groups";
+            var response = await _client.GetAsync(path).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<List<Group>>().ConfigureAwait(false);
+            }
+            return null;
+        }
+
+        public static async Task<List<Message>> GetUsersMessagesInGroup(Guid groupId)
+        {
+            var path = "api/group/" + groupId + "/messages";
+            var response = await _client.GetAsync(path).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<List<Message>>().ConfigureAwait(false);
+            }
+            return null;
+        }
+
+        public static async Task<Message> CreateMessage(CreateMessageParameters message)
+        {
+            var response = await _client.PostAsJsonAsync("api/message", new CreateMessageParameters()
+            {
+                messageText = message.messageText,
+                userFromId = message.userFromId,
+                groupToId = message.groupToId
+            });
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<Message>();
+            }
+            return null;
+        }
+
+        public static async Task<User> GetUser(Guid id)
+        {
+            var path = "api/user/" + id;
+            var response = await _client.GetAsync(path).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<User>().ConfigureAwait(false);
+            }
+            return null;
+        }
+
+        public static async Task<Message> CreateMessageWithFile(CreateMessageWithFileParameters message)
+        {
+            var response = await _client.PostAsJsonAsync("api/messages", new CreateMessageWithFileParameters()
+            {
+                userFromId = message.userFromId,
+                groupToId = message.groupToId,
+                photo = message.photo,
+                status = message.status,
+                name = message.name,
+                type = message.type
+            });
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<Message>();
+            }
+            return null;
+        }
+
+        public static async Task<Files> GetFileFromId(Guid id)
+        {
+            var path = "api/file/" + id;
+            var response = await _client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<Files>();
+            }
+            return null;
+        }
+
+        public static async Task<User> UpdateUser(UpdateParameters users)
+        {
+            var path = "api/user";
+            var response = await _client.PutAsJsonAsync(path, new UpdateParameters()
+            {
+                user = users.user,
+                newUser = users.newUser
+            });
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<User>();
             }
             return null;
         }

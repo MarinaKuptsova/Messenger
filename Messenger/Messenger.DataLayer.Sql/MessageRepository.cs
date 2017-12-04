@@ -18,7 +18,7 @@ namespace Messenger.DataLayer.Sql
             _connectionString = connectionString;
         }
 
-        public Message Create(string messageText, Guid userFromId, Guid groupToId)
+        public Message Create(string messageText, Guid userFromId, Guid groupToId, byte status)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -29,63 +29,76 @@ namespace Messenger.DataLayer.Sql
                     MessageText = messageText,
                     MessageFromUserId = userFromId,
                     MessageToGroupId = groupToId,
-                    SendTime = DateTime.Now
+                    SendTime = DateTime.Now,
+                    Status = status,
+                    IsRead = 1
                 };
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                            "insert into Message (Id, MessageText, MessageFromUserId, MessageToGroupId, SendTime) " +
-                            "values (@id, @text, @from, @to, @sendtime)";
+                            "insert into Message (Id, MessageText, MessageFromUserId, MessageToGroupId, SendTime, Status, IsRead) " +
+                            "values (@id, @text, @from, @to, @sendtime, @status, @isread)";
                     command.Parameters.AddWithValue("@id", message.Id);
                     command.Parameters.AddWithValue("@text", message.MessageText);
                     command.Parameters.AddWithValue("@from", message.MessageFromUserId);
                     command.Parameters.AddWithValue("@to", message.MessageToGroupId);
                     command.Parameters.AddWithValue("@sendtime", message.SendTime);
+                    command.Parameters.AddWithValue("@status", message.Status);
+                    command.Parameters.AddWithValue("@isread", message.IsRead);
                     command.ExecuteNonQuery();
                 }
                 return message;
             }
         }
 
-        public Message CreateWithFile(string messageText, Guid userFromId, Guid groupToId, Files file)
+       
+
+        public Message CreateWithFile(Guid userFromId, Guid groupToId, byte[] photo, byte status, string name, string type)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 using (var transaction = connection.BeginTransaction())
                 {
+                    Files file = new Files();
                     file.Id = Guid.NewGuid();
                     file.Owner = userFromId;
+                    file.UserFile = photo;
                     var message = new Message()
                     {
                         Id = Guid.NewGuid(),
                         MessageFromUserId = userFromId,
                         MessageToGroupId = groupToId,
-                        MessageText = messageText,
                         SendTime = DateTime.Now,
-                        AttachedFile = file.Id
+                        AttachedFile = file.Id, 
+                        Status = status,
+                        IsRead = 1
                     };
                     using (var command = connection.CreateCommand())
                     {
                         command.Transaction = transaction;
                         command.CommandText =
-                            "insert into Files (Id, Owner) values (@id, @owner)";
+                            "insert into Files (Id, Owner, UserFile, Name, Type) values (@id, @owner, @userfile, @name, @type)";
                         command.Parameters.AddWithValue("@id", file.Id);
                         command.Parameters.AddWithValue("@owner", file.Owner);
+                        command.Parameters.AddWithValue("@userfile", file.UserFile);
+                        command.Parameters.AddWithValue("@name", name);
+                        command.Parameters.AddWithValue("@type", type);
                         command.ExecuteNonQuery();
                     }
                     using (var command = connection.CreateCommand())
                     {
                         command.Transaction = transaction;
                         command.CommandText =
-                            "insert into Message (Id, MessageText, MessageFromUserId, MessageToGroupId, SendTime, AttachedFiles) " +
-                            "values (@id, @text, @from, @to, @sendtime, @files)";
+                            "insert into Message (Id, MessageFromUserId, MessageToGroupId, SendTime, AttachedFiles, Status, IsRead) " +
+                            "values (@id, @from, @to, @sendtime, @files, @status, @isread)";
                         command.Parameters.AddWithValue("@id", message.Id);
-                        command.Parameters.AddWithValue("@text", message.MessageText);
                         command.Parameters.AddWithValue("@from", message.MessageFromUserId);
                         command.Parameters.AddWithValue("@to", message.MessageToGroupId);
                         command.Parameters.AddWithValue("@sendtime", message.SendTime);
                         command.Parameters.AddWithValue("@files", message.AttachedFile);
+                        command.Parameters.AddWithValue("@status", message.Status);
+                        command.Parameters.AddWithValue("@isread", message.IsRead);
                         command.ExecuteNonQuery();
                     }
                     transaction.Commit();

@@ -30,7 +30,21 @@ namespace Messenger.Api.Controllers
             var messageText = messages.messageText;
             var userFromId = messages.userFromId;
             var groupToId = messages.groupToId;
-            return _messageRepository.Create(messageText, userFromId, groupToId);
+            var status = messages.status;
+            return _messageRepository.Create(messageText, userFromId, groupToId, status);
+        }
+
+        [HttpPost]
+        [Route("api/messages")]
+        public Message CreateWithFile([FromBody] CreateMessageWithFileParameters messageWithFile)
+        {
+            var userFromId = messageWithFile.userFromId;
+            var groupToId = messageWithFile.groupToId;
+            var photo = messageWithFile.photo;
+            var status = messageWithFile.status;
+            var name = messageWithFile.name;
+            var type = messageWithFile.type;
+            return _messageRepository.CreateWithFile(userFromId, groupToId, photo, status, name, type);
         }
 
         [HttpDelete]

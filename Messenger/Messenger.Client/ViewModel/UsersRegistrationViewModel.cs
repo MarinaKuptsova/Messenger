@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Windows.Controls;
 using Messenger.Client.Commands;
 using Messenger.Client.Model;
 using Messenger.Client.View;
 using Messenger.Model;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Messenger.Client.DataAccess;
 
 namespace Messenger.Client.ViewModel
@@ -16,12 +22,16 @@ namespace Messenger.Client.ViewModel
     {
         protected UsersRegestrationControl _usersRegistrationView;
         public MainViewModel Parent { get; set; }
+        public UserParameters UsersParameters { get; set; }
         public User newUser { get; set; }
         public Files Avatar { get; set; }
+        public BitmapImage img { get; set; }
+        public byte[] array;
+        public string FileName { get; set; } 
+        public string Warning { get; set; }
 
         public UsersRegistrationViewModel(MainViewModel mvm)
         {
-            newUser = new User();
             Avatar = new Files();
             Parent = mvm;
         }
@@ -46,7 +56,19 @@ namespace Messenger.Client.ViewModel
             dialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Avatar.Path = dialog.FileName;
+                var path = dialog.FileName;
+                FileName = dialog.SafeFileName;
+                Image image1 = Image.FromFile(path);
+                
+                ImageConverter converter = new ImageConverter();
+                array = (byte[]) converter.ConvertTo(image1, typeof(byte[]));
+                
+                MemoryStream stream = new MemoryStream(array);
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = stream;
+                image.EndInit();
+                img = image;
             }
         }
 
@@ -73,10 +95,24 @@ namespace Messenger.Client.ViewModel
 
         async Task<User> ExecuteCreateUserCommand(object param)
         {
-            var user = await DataAccess.DataAccess.CreateUser(newUser);
-            Parent.CurrentScreenType = ScreenTypes.Login;
-            Parent.SetScreen();
-            return user;
+            if (newUser.FirstName == null || newUser.LastName == null || newUser.Password == null || array == null)
+            {
+                Warning = "*заполните все поля";
+                return null;
+            }
+            else
+            {
+                UsersParameters = new UserParameters();
+                UsersParameters.user = newUser;
+                UsersParameters.photo = array;
+                UsersParameters.name = FileName.Split('.')[0];
+                UsersParameters.type = "." + FileName.Split('.')[1];
+                var user = await DataAccess.DataAccess.CreateUser(UsersParameters);
+                Warning = null;
+                Parent.CurrentScreenType = ScreenTypes.Login;
+                Parent.SetScreen();
+                return user;
+            }
         }
 
         public bool CanExecuteCreateUserCommand(object param)
@@ -116,6 +152,8 @@ namespace Messenger.Client.ViewModel
 
         public void Initialize()
         {
+            newUser = new User();
+            img = null;
         }
 
         public object View()

@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Messenger.Client.View.UpdateUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:l="clr-namespace:Messenger.Client.DataAccess"
+             xmlns:local="clr-namespace:Messenger.Client.View"
+             mc:Ignorable="d" 
+             Height="300" Width="300">
+    <Grid Margin="4 4 4 4">
+          <Grid.RowDefinitions>
+              <RowDefinition></RowDefinition>
+              <RowDefinition></RowDefinition>
+              <RowDefinition></RowDefinition>
+              <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions> 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <TextBox Grid.Row="0"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Stretch"
+                 Margin="8 0 8 0"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 materialDesign:HintAssist.Hint="Имя"
+                 Text="{Binding UpdatedUser.FirstName}"/>
+        <TextBox Grid.Row="1"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Stretch"
+                 Margin="8 0 8 0"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 materialDesign:HintAssist.Hint="Фамилия"
+                 Text="{Binding UpdatedUser.LastName}" />
+        <PasswordBox materialDesign:HintAssist.Hint="Пароль"
+                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                     Grid.Row="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     Margin="8 0 8 0"
+                     l:PasswordBoxAssistant.BindPassword="True"
+                     l:PasswordBoxAssistant.BoundPassword="{Binding Path=UpdatedUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    
+        <Button Grid.Row="3"
+                Grid.Column="1"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Margin="0 8 16 8"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+            Отмена
+        </Button>
+        <Button Grid.Row="3"
+                Grid.Column="2"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Margin="-4 8 4 8"
+                Command="{Binding UpdateCommand}"
+                CommandParameter="{Binding}">
+            Изменить
+        </Button>
+    </Grid>
+</UserControl>

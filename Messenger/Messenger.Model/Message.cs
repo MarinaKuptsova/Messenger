@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Windows;
+using System.ComponentModel;
+using System.Windows.Automation.Peers;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Messenger.Model
 {
@@ -10,6 +15,15 @@ namespace Messenger.Model
         public Guid MessageToGroupId { get; set; }
         public DateTime SendTime { get; set; }
         public Guid AttachedFile { get; set; }
+        public byte Status { get; set; }
+        public Visibility TextblockVisibility { get; set; }
+        public Visibility TextblockFileNameVisibility { get; set; }
+        public Visibility ButtonVisibility { get; set; }
+        public string AttachedFileName { get; set; }
+        public BitmapImage OwnerAva { get; set; }
+        public string OwnerName { get; set; }
+        public HorizontalAlignment Orientation { get; set; }
+        public byte IsRead { get; set; }
     }
 
 }
