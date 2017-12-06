@@ -144,9 +144,10 @@
               Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Height="Auto"
@@ -163,10 +164,15 @@
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Center"
                      Margin="10 0 10 20"
+                     TextWrapping="Wrap"
                      materialDesign:HintAssist.Hint="Текст"
                      Text="{Binding Path=MessageText, Mode=TwoWay}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
-            <Button Grid.Column="2"
+            <CheckBox Grid.Column="2"
+                      HorizontalAlignment="Center"
+                      ToolTip="Самоудаляющееся?"
+                      IsChecked="{Binding Status}"></CheckBox>
+            <Button Grid.Column="3"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Height="Auto"
                     Width="Auto"
@@ -186,9 +192,10 @@
                       Margin="8 8 8 8"
                       Grid.RowSpan="2"
                       ItemsSource="{Binding UsersGroups, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding CurrentGroup}">
+                  SelectedItem="{Binding CurrentGroup}"
+                  >
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
                              Path=DataContext.SelectChatCommand}"
                                            CommandParameter="{Binding}" />
@@ -197,18 +204,17 @@
             
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                        <Grid>
                            <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0"></Image>
+                            <!--<Image Grid.Column="0"></Image>-->
                             <TextBlock Grid.Column="1"
-                                       Margin="0 10 0 0"
-                                       Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                        Text="{Binding Path=GroupName, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-                            <TextBlock Grid.Column="1"
-                                       Margin="0 35 0 0">Сообщение</TextBlock>
+                            
                         </Grid>
                     </DataTemplate>
             </ListView.ItemTemplate>

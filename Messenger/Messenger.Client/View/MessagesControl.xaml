@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Messenger.Client.View"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="MessageControl">
@@ -16,7 +17,14 @@
                         <materialDesign:Card Height="Auto"
                                              Width="500"
                                              HorizontalAlignment="{Binding Orientation}"
-                                             Margin="0 0 4 4">
+                                             Margin="0 0 4 4"
+                                              >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeave">
+                                    <i:InvokeCommandAction Command="{Binding DataContext.DeleteMessageCommand, ElementName=MessageControl}"
+                                                           CommandParameter="{Binding}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>

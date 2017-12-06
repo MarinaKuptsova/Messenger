@@ -47,6 +47,13 @@ namespace Messenger.Api.Controllers
             return _messageRepository.CreateWithFile(userFromId, groupToId, photo, status, name, type);
         }
 
+        [HttpPut]
+        [Route("api/message/{id}")]
+        public void Update(Guid id)
+        {
+            _messageRepository.UpdateIsRead(id);
+        }
+
         [HttpDelete]
         [Route("api/message/{id}")]
         public void Delete(Guid id)

@@ -37,6 +37,21 @@ namespace Messenger.Client.DataAccess
             return array;
         }
 
+        public byte[] ConverterTextToArray(string path)
+        {
+            var array = File.ReadAllBytes(path);
+            return array;
+        }
+
+        public void FromBytesToText(Files files)
+        {
+            string s = Encoding.UTF7.GetString(files.UserFile);
+            var filename = String.Concat(files.Name, files.Type);
+            var path = String.Concat(Directory.GetCurrentDirectory(), "\\" + filename);
+            File.WriteAllText(path, s);
+            Process.Start(filename);
+        }
+
         public void FromBytesToImage(Files files)
         {
             MemoryStream ms = new MemoryStream(files.UserFile);
@@ -49,7 +64,7 @@ namespace Messenger.Client.DataAccess
 
         public byte[] FromSmthToArray(string filename, string path)
         {
-            var type = filename.Split('.')[1];
+            var type = "." + filename.Split('.')[1];
             switch (type)
             {
                 case ".jpg":
@@ -58,7 +73,8 @@ namespace Messenger.Client.DataAccess
                     return ConverterImageToArray(path);
                 case ".jpeg":
                     return ConverterImageToArray(path);
-
+                case ".txt":
+                    return ConverterTextToArray(path);
                 default:
                     return null;
             }
@@ -76,6 +92,9 @@ namespace Messenger.Client.DataAccess
                     break;
                 case ".jpeg":
                     FromBytesToImage(file);
+                    break;
+                case ".txt":
+                    FromBytesToText(file);
                     break;
                 default:
                     break;

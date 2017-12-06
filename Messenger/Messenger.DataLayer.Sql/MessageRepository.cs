@@ -18,7 +18,7 @@ namespace Messenger.DataLayer.Sql
             _connectionString = connectionString;
         }
 
-        public Message Create(string messageText, Guid userFromId, Guid groupToId, byte status)
+        public Message Create(string messageText, Guid userFromId, Guid groupToId, bool status)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -31,7 +31,7 @@ namespace Messenger.DataLayer.Sql
                     MessageToGroupId = groupToId,
                     SendTime = DateTime.Now,
                     Status = status,
-                    IsRead = 1
+                    IsRead = false
                 };
                 using (var command = connection.CreateCommand())
                 {
@@ -43,8 +43,8 @@ namespace Messenger.DataLayer.Sql
                     command.Parameters.AddWithValue("@from", message.MessageFromUserId);
                     command.Parameters.AddWithValue("@to", message.MessageToGroupId);
                     command.Parameters.AddWithValue("@sendtime", message.SendTime);
-                    command.Parameters.AddWithValue("@status", message.Status);
-                    command.Parameters.AddWithValue("@isread", message.IsRead);
+                    command.Parameters.AddWithValue("@status", Convert.ToByte(message.Status));
+                    command.Parameters.AddWithValue("@isread", Convert.ToByte(message.IsRead));
                     command.ExecuteNonQuery();
                 }
                 return message;
@@ -53,7 +53,7 @@ namespace Messenger.DataLayer.Sql
 
        
 
-        public Message CreateWithFile(Guid userFromId, Guid groupToId, byte[] photo, byte status, string name, string type)
+        public Message CreateWithFile(Guid userFromId, Guid groupToId, byte[] photo, bool status, string name, string type)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -72,7 +72,7 @@ namespace Messenger.DataLayer.Sql
                         SendTime = DateTime.Now,
                         AttachedFile = file.Id, 
                         Status = status,
-                        IsRead = 1
+                        IsRead = false
                     };
                     using (var command = connection.CreateCommand())
                     {
@@ -97,8 +97,8 @@ namespace Messenger.DataLayer.Sql
                         command.Parameters.AddWithValue("@to", message.MessageToGroupId);
                         command.Parameters.AddWithValue("@sendtime", message.SendTime);
                         command.Parameters.AddWithValue("@files", message.AttachedFile);
-                        command.Parameters.AddWithValue("@status", message.Status);
-                        command.Parameters.AddWithValue("@isread", message.IsRead);
+                        command.Parameters.AddWithValue("@status", Convert.ToByte(message.Status));
+                        command.Parameters.AddWithValue("@isread", Convert.ToByte(message.IsRead));
                         command.ExecuteNonQuery();
                     }
                     transaction.Commit();
@@ -116,6 +116,20 @@ namespace Messenger.DataLayer.Sql
                 {
                     command.CommandText =
                         "delete from Message where Id=@id";
+                    command.Parameters.AddWithValue("@id", messageId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateIsRead(Guid messageId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "update Message set IsRead=1 where Id=@id";
                     command.Parameters.AddWithValue("@id", messageId);
                     command.ExecuteNonQuery();
                 }

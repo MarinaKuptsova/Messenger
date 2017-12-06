@@ -35,8 +35,9 @@ namespace Messenger.Client.ViewModel
         public CreateMessageParameters MessageParameters { get; set; }
         public CreateMessageWithFileParameters MessageWithFile { get; set; }
         public BitmapImage AvatarUser { get; set; }
-        public Byte Status { get; set; }
+        public bool Status { get; set; }
         public User UpdatedUser { get; set; }
+      
         
 
         #region Message Parameters
@@ -152,7 +153,9 @@ namespace Messenger.Client.ViewModel
                 {
                     messageText = MessageText,
                     userFromId = GlobalUser.Id,
-                    groupToId = CurrentGroup.Id
+                    groupToId = CurrentGroup.Id,
+                    status = Status,
+                    IsRead = false
                 };
                 MessageText = null;
                 var message = await DataAccess.DataAccess.CreateMessage(MessageParameters);
@@ -160,6 +163,7 @@ namespace Messenger.Client.ViewModel
                 message.TextblockFileNameVisibility = Visibility.Collapsed;
                 message.OwnerAva = Parent.MainUserAva;
                 message.OwnerName = Parent.MainUser.FirstName;
+                message.Orientation = HorizontalAlignment.Right;
                 UsersMessages.Add(message);
                 return message;
             }
@@ -225,19 +229,21 @@ namespace Messenger.Client.ViewModel
             {
                 var path = dialog.FileName;
                 var fileName = dialog.SafeFileName;
-                var array = converter.ConverterImageToArray(path);
-                Status = new byte();//получить значение
+                var array = converter.FromSmthToArray(fileName, path);
+                
                 MessageWithFile = new CreateMessageWithFileParameters()
                 {
                     photo = array,
-                    status = 1,
+                    status = Status,
                     userFromId = GlobalUser.Id,
                     groupToId = CurrentGroup.Id,
                     name = fileName.Split('.')[0],
-                    type = "." + fileName.Split('.')[1]
+                    type = "." + fileName.Split('.')[1],
+                    IsRead = false
                 };
                 var message = await DataAccess.DataAccess.CreateMessageWithFile(MessageWithFile);
                 message.AttachedFileName = fileName;
+                message.Orientation = HorizontalAlignment.Right;
                 UsersMessages.Add(message);
                 message.TextblockVisibility = Visibility.Collapsed;
                 message.OwnerAva = Parent.MainUserAva;
@@ -268,12 +274,12 @@ namespace Messenger.Client.ViewModel
             }
         }
 
-        public void ExecuteOpenFileCommand(object param)
+        async Task<Files> ExecuteOpenFileCommand(object param)
         {
-            var result = DataAccess.DataAccess.GetFileFromId((param as Message).AttachedFile).Result;
+            var result = await DataAccess.DataAccess.GetFileFromId((param as Message).AttachedFile);
             Converter converter = new Converter();
             converter.FromBytesToSmth(result);
-            
+            return result;
         }
 
         public bool CanExecuteOpenFileCommand(object param)
@@ -354,6 +360,54 @@ namespace Messenger.Client.ViewModel
         {
             return true;
         }
+        #endregion
+
+        #region Delete Message
+
+        private RelayCommand _deleteMessageCommand;
+
+        public RelayCommand DeleteMessageCommand
+        {
+            get
+            {
+                return _deleteMessageCommand ?? (_deleteMessageCommand =
+                           new RelayCommand(param => ExecuteDeleteMessageCommand(param),
+                               param => CanExecuteDeleteMessageCommand(param)));
+            }
+        }
+
+        public async void ExecuteDeleteMessageCommand(object param)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(10));
+            DataAccess.DataAccess.DeleteMessage((param as Message).Id);
+            UsersMessages.Remove(param as Message);
+        }
+
+        public bool CanExecuteDeleteMessageCommand(object param)
+        {
+            if ((param as Message).MessageFromUserId == GlobalUser.Id)
+            {
+                return false;
+            }
+            else
+            {
+                if ((param as Message).Status)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (!(param as Message).IsRead)
+                    {
+                        DataAccess.DataAccess.UpdateMessage((param as Message).Id);
+                    }
+
+                    return false;
+                }
+            }
+            
+        }
+
         #endregion
 
         public void Initialize()

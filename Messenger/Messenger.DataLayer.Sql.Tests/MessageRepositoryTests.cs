@@ -17,7 +17,7 @@ namespace Messenger.DataLayer.Sql.Tests
         public void ShouldCreateMessage()
         {
             string messageText = "Привет. Как дела?";
-            byte status = 1;
+            bool status = false;
             string name = "photo";
             string type = ".jpg";
             var user1 = new User()

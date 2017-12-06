@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -105,7 +106,8 @@ namespace Messenger.Client.DataAccess
             {
                 messageText = message.messageText,
                 userFromId = message.userFromId,
-                groupToId = message.groupToId
+                groupToId = message.groupToId,
+                status = message.status
             });
             if (response.IsSuccessStatusCode)
             {
@@ -167,6 +169,19 @@ namespace Messenger.Client.DataAccess
                 return await response.Content.ReadAsAsync<User>();
             }
             return null;
+        }
+
+        public static async Task<HttpStatusCode> DeleteMessage(Guid id)
+        {
+            var response = await _client.DeleteAsync($"api/message/{id}");
+            return response.StatusCode;
+        }
+
+        public static async Task<HttpStatusCode> UpdateMessage(Guid id)
+        {
+            var IsRead = 1;
+            var response = await _client.PutAsJsonAsync($"api/message/{id}", IsRead).ConfigureAwait(false);
+            return response.StatusCode;
         }
     }
 }

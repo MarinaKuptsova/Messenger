@@ -15,7 +15,7 @@ namespace Messenger.Model
         public Guid MessageToGroupId { get; set; }
         public DateTime SendTime { get; set; }
         public Guid AttachedFile { get; set; }
-        public byte Status { get; set; }
+        public bool Status { get; set; }
         public Visibility TextblockVisibility { get; set; }
         public Visibility TextblockFileNameVisibility { get; set; }
         public Visibility ButtonVisibility { get; set; }
@@ -23,7 +23,8 @@ namespace Messenger.Model
         public BitmapImage OwnerAva { get; set; }
         public string OwnerName { get; set; }
         public HorizontalAlignment Orientation { get; set; }
-        public byte IsRead { get; set; }
+        public bool IsRead { get; set; }
+        
     }
 
 }

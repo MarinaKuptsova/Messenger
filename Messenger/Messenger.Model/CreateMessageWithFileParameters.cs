@@ -11,8 +11,9 @@ namespace Messenger.Model
         public Guid userFromId { get; set; }
         public Guid groupToId { get; set; }
         public byte[] photo { get; set; }  
-        public byte status { get; set; }
+        public bool status { get; set; }
         public string name { get; set; }
         public string type { get; set; }
+        public bool IsRead { get; set; }
     }
 }

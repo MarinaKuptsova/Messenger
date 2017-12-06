@@ -182,12 +182,12 @@ namespace Messenger.DataLayer.Sql
                                     MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
                                     SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime")),
                                     AttachedFile = reader.GetGuid(reader.GetOrdinal("AttachedFiles")),
-                                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                                    Status = Convert.ToBoolean(reader.GetByte(reader.GetOrdinal("Status"))),
                                     AttachedFileName = String.Concat(reader.GetString(reader.GetOrdinal("Name")), reader.GetString(reader.GetOrdinal("Type"))),
                                     TextblockVisibility = Visibility.Collapsed,
                                     ButtonVisibility = Visibility.Visible,
                                     TextblockFileNameVisibility = Visibility.Visible,
-                                    IsRead = reader.GetByte(reader.GetOrdinal("IsRead"))
+                                    IsRead = Convert.ToBoolean(reader.GetByte(reader.GetOrdinal("IsRead")))
                                     
                                 };
                                 usersMessages.Add(message);
@@ -201,11 +201,11 @@ namespace Messenger.DataLayer.Sql
                                     MessageFromUserId = reader.GetGuid(reader.GetOrdinal("MessageFromUserId")),
                                     MessageToGroupId = reader.GetGuid(reader.GetOrdinal("MessageToGroupId")),
                                     SendTime = reader.GetDateTime(reader.GetOrdinal("SendTime")),
-                                    Status = reader.GetByte(reader.GetOrdinal("Status")),
+                                    Status = Convert.ToBoolean(reader.GetByte(reader.GetOrdinal("Status"))),
                                     ButtonVisibility = Visibility.Collapsed,
                                     TextblockFileNameVisibility = Visibility.Collapsed,
                                     TextblockVisibility = Visibility.Visible,
-                                    IsRead = reader.GetByte(reader.GetOrdinal("IsRead"))
+                                    IsRead = Convert.ToBoolean(reader.GetByte(reader.GetOrdinal("IsRead")))
                                 };
                                 usersMessages.Add(message);
                             }

@@ -202,7 +202,7 @@ namespace Messenger.DataLayer.Sql.Tests
             string messageText1 = "Привет. Как дела?";
             string messageText2 = "Привет. Нормально.";
 
-            byte status = 1;
+            var status = false;
             var user1 = new User()
             {
                 FirstName = "test1",
